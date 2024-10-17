@@ -1,0 +1,18 @@
+version: '4.32.0'
+
+services:
+
+  postgres:
+    image: postgres:11.13
+    container_name: postgres_db_correction
+    volumes:
+      - db-store:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_DB=t1_demo_correction
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+volumes:
+  db-store:
+    driver: local

@@ -1,0 +1,48 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: correction.app
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/t1_demo_correction
+    username: postgres
+    password: 1234
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: db/changelog/db.changelog-master.xml
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    session:
+      timeout:
+        ms: 15000
+
+    consumer:
+      group-id: group-4
+      max:
+        poll:
+          records: 1
+          interval:
+            ms: 3000
+
+    topic:
+      transaction-errors: t1_demo_client_transaction_errors
+
+    listener:
+      poll:
+        timeout: 1000
+    max:
+      partition:
+        fetch:
+          bytes: 300000
+
+  url:
+    account:
+      unlock: http://localhost:8080/unlock
+
+logging:
+  level:
+    ROOT: INFO
