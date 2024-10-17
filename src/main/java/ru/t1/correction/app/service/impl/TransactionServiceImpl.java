@@ -20,26 +20,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository repository;
     private final FailedTransactionMapper mapper;
 
-    @Override
     @Transactional
-    public void registerTransaction(List<FailedTransactionDto> messageList) {
-
-        List<FailedTransaction> transactions = messageList.stream()
-                .map(mapper::toEntity).toList();
-
-        for(FailedTransaction transaction : transactions) {
-            if (!repository.existsByOriginalTransactionId(transaction.getOriginalTransactionId())) {
-
-                repository.save(transaction);
-                log.info("The transaction with ID {} has been saved.", transaction);
-            } else {
-                log.info("The transaction with ID {} already exists.", transaction);
-            }
-        }
-    }
-
-    @Transactional
-    public void deleteTransaction(FailedTransactionDto dto) {
+    public void delete(FailedTransactionDto dto) {
 
         FailedTransaction failedTransaction = mapper.toEntity(dto);
 
@@ -56,7 +38,14 @@ public class TransactionServiceImpl implements TransactionService {
     public void createRecord(FailedTransactionDto dto) {
 
         FailedTransaction failedTransaction = mapper.toEntity(dto);
-        repository.save(failedTransaction);
-        log.info("The FailedTransaction {} is saved", failedTransaction.getId());
+
+        if(!repository.existsByOriginalTransactionId(failedTransaction.getOriginalTransactionId())) {
+            repository.save(failedTransaction);
+            log.info("The FailedTransaction {} is saved", failedTransaction.getId());
+        }
+    }
+
+    public List<FailedTransaction> findAll() {
+        return repository.findAll();
     }
 }
