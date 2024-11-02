@@ -13,4 +13,6 @@ public interface TransactionRepository extends JpaRepository<FailedTransaction, 
     @Override
     List<FailedTransaction> findAll();
 
+    void deleteByOriginalTransactionId(Long originalTransactionId);
+
 }

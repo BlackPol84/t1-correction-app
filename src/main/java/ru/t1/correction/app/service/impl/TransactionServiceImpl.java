@@ -27,7 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         if(repository.existsByOriginalTransactionId(failedTransaction.getOriginalTransactionId())) {
 
-            repository.delete(failedTransaction);
+            repository.deleteByOriginalTransactionId(failedTransaction.getOriginalTransactionId());
             log.info("FailedTransaction {} has been deleted", failedTransaction.getId());
 
         } else {

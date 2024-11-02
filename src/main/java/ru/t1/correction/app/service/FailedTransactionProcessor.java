@@ -14,6 +14,7 @@ import ru.t1.correction.app.model.FailedTransaction;
 import ru.t1.correction.app.model.dto.FailedTransactionDto;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
@@ -48,9 +49,10 @@ public class FailedTransactionProcessor {
         ResponseEntity<String> response = restTemplate
                 .postForEntity(unlockAccountUrl, transactionDto, String.class);
 
-        if(response.getStatusCode() == OK) {
+        if(Objects.equals(response.getBody(), "Account unlocked") ||
+                        Objects.equals(response.getBody(), "Account is not blocked.")) {
             service.delete(transactionDto);
-        } else if (response.getStatusCode() == FORBIDDEN) {
+        } else if (Objects.equals(response.getBody(), "Insufficient funds to unlock account.")) {
             service.createRecord(transactionDto);
         }  else {
             log.warn("Received unexpected status code {} for transaction {}",
