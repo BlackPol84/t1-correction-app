@@ -30,9 +30,6 @@ public class FailedTransactionProcessorTest extends AbstractIntegrationTestIniti
     @Autowired
     private TransactionRepository repository;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     private static MockServerClient serverClient;
 
     @BeforeAll
@@ -42,7 +39,7 @@ public class FailedTransactionProcessorTest extends AbstractIntegrationTestIniti
 
     @AfterEach
     public void tearDown() {
-        JdbcTestUtils.deleteFromTables(jdbcTemplate, "failed_transaction");
+        repository.deleteAll();
         serverClient.reset();
     }
 
@@ -113,7 +110,6 @@ public class FailedTransactionProcessorTest extends AbstractIntegrationTestIniti
         assertNotNull(transactions.get(0).getId());
         assertEquals(1, transactions.get(0).getOriginalTransactionId());
         assertEquals(1, transactions.get(0).getAccountId());
-
     }
 
     @Test
@@ -142,6 +138,4 @@ public class FailedTransactionProcessorTest extends AbstractIntegrationTestIniti
         assertEquals(1, transactions.get(0).getAccountId());
 
     }
-
-
 }
