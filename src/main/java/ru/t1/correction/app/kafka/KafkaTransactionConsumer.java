@@ -8,7 +8,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import ru.t1.correction.app.model.dto.FailedTransactionDto;
 import ru.t1.correction.app.service.FailedTransactionProcessor;
-import ru.t1.correction.app.service.TransactionService;
 
 import java.util.List;
 
@@ -29,6 +28,7 @@ public class KafkaTransactionConsumer {
         try {
             processor.processFailedTransactions(messageList);
             ack.acknowledge();
+
         } catch (Exception ex) {
             log.error("Message processing error: ", ex);
         }
