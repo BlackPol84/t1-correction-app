@@ -3,9 +3,7 @@ package ru.t1.correction.app.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,11 +14,7 @@ import ru.t1.correction.app.model.dto.FailedTransactionDto;
 import java.util.List;
 import java.util.Objects;
 
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.OK;
-
 @Slf4j
-@EnableScheduling
 @RequiredArgsConstructor
 @Service
 public class FailedTransactionProcessor {
