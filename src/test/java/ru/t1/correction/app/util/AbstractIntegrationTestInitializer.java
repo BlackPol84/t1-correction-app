@@ -10,7 +10,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers(disabledWithoutDocker = true)
-@SpringBootTest
+@SpringBootTest(properties = "spring.application.scheduling.enable=false")
 public abstract class AbstractIntegrationTestInitializer {
 
     protected static PostgreSQLContainer<?> container =

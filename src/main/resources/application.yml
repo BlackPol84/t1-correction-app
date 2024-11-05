@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: correction.app
+    scheduling:
+      enable: true
 
   datasource:
     url: jdbc:postgresql://localhost:5433/t1_demo_correction
